@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   db:
-    image: mariadb
+    image: mariadb:10.6.13
     container_name: mariadb_prd
     restart: always
     environment:
@@ -11,6 +11,6 @@ services:
       MYSQL_USER: testuser
       MYSQL_PASSWORD: test#1234
     ports:
-      - "1793:3306"
+      - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
+      - /opt/mariadb_data/data:/var/lib/mysql

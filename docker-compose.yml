@@ -1,16 +1,24 @@
-version: '3.1'
-
 services:
   db:
-    image: mariadb:10.6
+    image: mariadb:10.6.13
     container_name: mariadb_prd
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: user#1234
-      MYSQL_DATABASE: test
-      MYSQL_USER: testuser
-      MYSQL_PASSWORD: test#1234
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "1793:3306"
+      - target: 3306
+        published: 3306
     volumes:
-      - /opt/mariadb_data/data:/var/lib/mysql
+      - /opt/mariadb_data/data/:/var/lib/mysql
+    networks:
+      - mariadb_network
+
+networks:
+  mariadb_network:
+    driver: bridge
+
+volumes:
+  db_data:
